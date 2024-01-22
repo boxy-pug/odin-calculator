@@ -1,18 +1,8 @@
-// const numberButtons = document.querySelectorAll("[data-number]");
-// const operationButtons = document.querySelectorAll("[data-operation]");
-// const equalsButtons = document.querySelector("[data-equals]");
-// const previousOperandText = document.querySelector("[data-previous-operand]");
-// const currentOperandText = document.querySelector("[data-current-operand]");
-
-// function add() {}
-
-// const calculator = document.querySelector("#calculator-container");
 const calculator = document.querySelector(".calculator");
 const keys = calculator.querySelector("#calculator-container");
 const screen = calculator.querySelector("#screen");
 
 keys.addEventListener("click", (event) => {
-  //   console.log(event.target);
   if (!event.target.closest("button")) return;
 
   const key = event.target;
@@ -22,9 +12,12 @@ keys.addEventListener("click", (event) => {
   const { previousKeyType } = calculator.dataset;
 
   // If it's a number:
-  if (type === "number") {
-    if (screenValue === "0") {
-      screen.textContent = keyValue;
+  if (type === "number" || type === "comma") {
+    if (screenValue === "0" || previousKeyType === "operator") {
+      screen.textContent = key.textContent === "." ? "0." : keyValue;
+    } else if (key.textContent === "." && screenValue.includes(".")) {
+      return;
+      screen.textContent = screenValue + keyValue;
     } else if (previousKeyType === "operator") {
       screen.textContent = keyValue;
     } else {
@@ -66,8 +59,8 @@ keys.addEventListener("click", (event) => {
 });
 
 function calculate(firstNumber, operator, secondNumber) {
-  firstNumber = parseInt(firstNumber);
-  secondNumber = parseInt(secondNumber);
+  firstNumber = parseFloat(firstNumber);
+  secondNumber = parseFloat(secondNumber);
   let result = "0";
   if (operator === "plus") result = firstNumber + secondNumber;
   if (operator === "minus") result = firstNumber - secondNumber;
