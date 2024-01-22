@@ -9,7 +9,6 @@ body {
 }
 
 #calculator-container {
-  border: 1px solid grey;
   border-radius: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -56,9 +55,13 @@ div > button {
   border-radius: 5px;
 }
 
-button.operation {
+.operation {
   background-color: orange;
 }
 
 button.number {
+}
+
+[data-state="selected"] {
+  background: darkgreen;
 }
